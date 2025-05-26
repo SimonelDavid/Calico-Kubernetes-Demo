@@ -1,15 +1,13 @@
-# global-deny.yaml
-apiVersion: projectcalico.org/v3
+apiVersion: crd.projectcalico.org/v1
 kind: GlobalNetworkPolicy
 metadata:
-  name: global-deny-all
+  name: global-deny-ingress
 spec:
-  order: 1000
-  selector: all()
+  namespaceSelector: "has(kubernetes.io/metadata.name) && kubernetes.io/metadata.name not in {'kube-system', 'calico-system'}"
   types:
     - Ingress
-    - Egress
   ingress:
-    - action: Deny
-  egress:
+    - action: Allow
+      source:
+        selector: "projectcalico.org/created-by == 'calico-kube-controllers'"
     - action: Deny

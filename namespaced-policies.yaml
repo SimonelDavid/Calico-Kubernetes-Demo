@@ -1,29 +1,17 @@
-# allow-egress-ns-a.yaml
-apiVersion: projectcalico.org/v3
+apiVersion: crd.projectcalico.org/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-egress-to-ns-b
-  namespace: ns-a
-spec:
-  selector: all()
-  types:
-    - Egress
-  egress:
-    - action: Allow
-      destination:
-        namespaceSelector: "projectcalico.org/name == 'ns-b'"
-
-# allow-ingress-ns-b.yaml
-apiVersion: projectcalico.org/v3
-kind: NetworkPolicy
-metadata:
-  name: allow-ingress-from-ns-a
+  name: allow-ns-a-to-ns-b
   namespace: ns-b
 spec:
+  order: 100
   selector: all()
   types:
     - Ingress
   ingress:
     - action: Allow
       source:
-        namespaceSelector: "projectcalico.org/name == 'ns-a'"
+        namespaceSelector: "kubernetes.io/metadata.name in {'ns-a'}"
+    - action: Allow
+      source:
+        selector: "subnets == 'ns-a-private-subnet'"
