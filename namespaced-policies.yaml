@@ -1,0 +1,29 @@
+# allow-egress-ns-a.yaml
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-to-ns-b
+  namespace: ns-a
+spec:
+  selector: all()
+  types:
+    - Egress
+  egress:
+    - action: Allow
+      destination:
+        namespaceSelector: "projectcalico.org/name == 'ns-b'"
+
+# allow-ingress-ns-b.yaml
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-from-ns-a
+  namespace: ns-b
+spec:
+  selector: all()
+  types:
+    - Ingress
+  ingress:
+    - action: Allow
+      source:
+        namespaceSelector: "projectcalico.org/name == 'ns-a'"
