@@ -48,7 +48,7 @@ minikube start --cni=calico
 kubectl apply -f namespaces-pods-services.yaml
 ```
 
-Each pod runs `nginx:alpine` with `ping`, `wget`, and `curl` pre-installed.
+> Each pod runs `nginx:alpine` with `ping`, `wget`, and `curl` pre-installed.
 
 ---
 
@@ -58,7 +58,7 @@ Each pod runs `nginx:alpine` with `ping`, `wget`, and `curl` pre-installed.
 kubectl apply -f global-policy.yaml
 ```
 
-This policy blocks all incoming traffic to pods, except Calico’s internal control traffic.
+> This policy blocks all incoming traffic to pods, except Calico’s internal control traffic.
 
 ---
 
