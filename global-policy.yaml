@@ -1,0 +1,15 @@
+# global-deny.yaml
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: global-deny-all
+spec:
+  order: 1000
+  selector: all()
+  types:
+    - Ingress
+    - Egress
+  ingress:
+    - action: Deny
+  egress:
+    - action: Deny
